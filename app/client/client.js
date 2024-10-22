@@ -14,9 +14,13 @@ async function main() {
     const proxy = new ClientProxy(requestor);
   
     // Definir o método e os argumentos que serão chamados no servidor
-    const methodName = 'subtract';  // nome do método remoto, exemplo: 'add' para somar dois números
-    const args = [10, 20];     // argumentos a serem passados para o método remoto
-  
+    //const methodName = 'createFile';  // nome do método remoto, exemplo: 'add' para somar dois números
+    //const args = ['teste', 'tgeste'];     // argumentos a serem passados para o método remoto
+    //const methodName = 'deleteFile';
+    //const args = ['teste'];
+    const methodName = 'attFile';
+    const args = ['teste', 'tgesteatt'];
+
     try {
       // Invoca o método remoto passando o nome e os argumentos
       const result = await proxy.invoke(methodName, ...args);

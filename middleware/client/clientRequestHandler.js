@@ -9,6 +9,7 @@ class ClientRequestHandler {
 
   send(request) {
     return new Promise((resolve, reject) => {
+      
       const message = Buffer.from(request);
 
       // Envia a mensagem para o servidor UDP

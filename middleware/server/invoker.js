@@ -1,6 +1,5 @@
 
 const Marshaller = require("../mashaller");
-
 class Invoker {
     constructor(service) {
       this.service = service;
