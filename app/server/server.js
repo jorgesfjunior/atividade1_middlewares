@@ -5,12 +5,22 @@ const ServerRequestHandler = require("../../middleware/server/serverRequestHandl
 const dgram = require('dgram');
 const server = dgram.createSocket('udp4');
 const fs = require('fs');
+const path = require('path');
 
 app.use(express.json());
 
 function criarArquivoSync(nomeArquivo, conteudo) {
+
+  const pasta = path.join(__dirname, 'archives');
+
+  if (!fs.existsSync(pasta)) {
+    fs.mkdirSync(pasta, { recursive: true }); // Cria a pasta e suas subpastas, se necessário
+  }
+
+  const caminhoCompleto = path.join(pasta, nomeArquivo);
+
   try {
-    fs.writeFileSync(nomeArquivo, conteudo);
+    fs.writeFileSync(caminhoCompleto, conteudo);
     console.log(`Arquivo "${nomeArquivo}" criado com sucesso!`);
     return "TUDO CERTO!";
   } catch (err) {
@@ -20,13 +30,22 @@ function criarArquivoSync(nomeArquivo, conteudo) {
 }
 
 async function excluirArquivo(nomeArquivo) {
+
+  const pasta = path.join(__dirname, 'archives');
+
+  if (!fs.existsSync(pasta)) {
+    fs.mkdirSync(pasta, { recursive: true }); // Cria a pasta e suas subpastas, se necessário
+  }
+
+  const caminhoCompleto = path.join(pasta, nomeArquivo);
+
   try {
-    if (!nomeArquivo) {
+    if (!caminhoCompleto) {
       throw new Error('O nome do arquivo deve ser fornecido.');
     }
 
     // Exclui o arquivo
-    await fs.promises.unlink(nomeArquivo);
+    await fs.promises.unlink(caminhoCompleto);
     console.log(`Arquivo "${nomeArquivo}" excluído com sucesso!`);
     return "ok!";
   } catch (err) {
@@ -36,13 +55,23 @@ async function excluirArquivo(nomeArquivo) {
 }
 
 async function atualizarConteudoArquivo(nomeArquivo, novoConteudo) {
+
+  const pasta = path.join(__dirname, 'archives');
+
+  if (!fs.existsSync(pasta)) {
+    fs.mkdirSync(pasta, { recursive: true }); // Cria a pasta e suas subpastas, se necessário
+  }
+
+  const caminhoCompleto = path.join(pasta, nomeArquivo);
+
+  
   try {
-    if (!nomeArquivo) {
+    if (!caminhoCompleto) {
       throw new Error('O nome do arquivo deve ser fornecido.');
     }
 
     // Atualiza o conteúdo do arquivo
-    await fs.promises.writeFile(nomeArquivo, novoConteudo);
+    await fs.promises.writeFile(caminhoCompleto, novoConteudo);
     console.log(`Arquivo "${nomeArquivo}" atualizado com sucesso!`);
     return "ok!"
   } catch (err) {

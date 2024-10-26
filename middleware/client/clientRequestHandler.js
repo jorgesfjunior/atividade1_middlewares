@@ -25,7 +25,7 @@ class ClientRequestHandler {
       this.client.on('message', (response) => {
         const responseMessage = response.toString();
         resolve(JSON.parse(responseMessage));  // Deserializa a resposta
-        this.client.close();  // Fecha o socket depois de receber a resposta
+        //this.client.close();  // Fecha o socket depois de receber a resposta
       });
     });
   }

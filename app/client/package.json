@@ -4,11 +4,14 @@
   "description": "Aplicacao cliente de gerenciamento de arquivos",
   "main": "client.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node client.js"
   },
   "author": "Jorge Soares",
   "license": "ISC",
   "dependencies": {
-    "client": "file:"
+    "client": "file:",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1"
   }
 }

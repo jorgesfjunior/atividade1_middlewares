@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente</title>
+</head>
+
+<body>
+    <h1>Cliente para Gerenciamento de Arquivos</h1>
+
+    <hr>
+    <h1>Criar arquivo</h1>
+    <div id="create">
+        <form action="/create" method="post">
+            <label for="name">Título do arquivo</label>
+            <input type="text" name="name" id="name" required>
+            <label for="name">Conteúdo</label>
+            <input type="text" name="data" id="data" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+    <hr>
+    <h1>Atualizar arquivo</h1>
+    <div id="update">
+        <form action="/update" method="post">
+            <label for="name">Título do arquivo</label>
+            <input type="text" name="name" id="name" required>
+            <label for="name">Conteúdo</label>
+            <input type="text" name="data" id="data" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <hr>
+    <h1>Excluir arquivo</h1>
+    <div id="delete">
+        <form action="/delete" method="post">
+            <label for="name">Título do arquivo</label>
+            <input type="text" name="name" id="name" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</body>
+
+</html>
