@@ -94,6 +94,28 @@ app.post('/delete', function(req,res){
   res.render("resultado", {name: nome, data: null, method: "excluído"});
 });
 
+app.get('/experiment', async function(req,res){
+
+  function pausa(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  const nome = "teste1.txt";
+  const data = "Gcz2BrWcsE1POwRmTqFOqgZEmWRyRlRHKzPoB9OFfDWdnVW3WQfZ9ikAb5KnCmOaMv5z3hY0IJmbh8SejClNzNhXgB41SE3Ym1wNTzhwviXtVmHiVCzME2Oj2O6Y5wbcNm0ENJrsjhvIQfby1FtwIhxXvlGh7ed6H4kMriPK4ZCXJfbsLeXKcBeayQFZ8NOCbwRgMm7u0fGZ3bvPgsnvG8JZLFr8BQDTxlgzIusx3uv7aD1j4LQzDBQmnl9MSKJuzQFQ4TT2thtmQczxiEG5TT0WAIQGFPy3E7Fwvh7TUSnsOx9Ltth6SOQyxnvSbUnYshBhcncDqD4v3TSdjAWYmDBqREKYyswm6Z5gAg8BDXePiXFW6NlyKwE1G8TKxtZxGVyyi7NzC1blSZTH3kcTngHz0rnSBFe52XhddGoFL7oSN14ZztxdElHJ5UxzWPIv1qgrNoaHbwtGxD25KNnlHJIO0HTDAAKwTPFDzBqO5ukd7umC2nd76b2WddHgmsOtKMUXzz9gVbSwkb9AOCZtf6V7SlpjfW0jPWoP7AbCayP3UrD64f6dKP84FV7qDOX5IkGMcSzEZa8ZWwRuGnpxGpeEPYNFhLVHZrxW23uPd4gE0J4BL7dVNsULCHnGbyOKbHrfGTXmjN1BodcXw96TvIWejhcFToU7Kr9MOG6EvNL98vSDC5tYGsYBa7AieYWgfRNdQb4bcS0aRm6D1Tw4fb7wupfNPSGH1JQKTG6l8KDFXTn1cPtqJtFfwSB0CLmGYSeI59vWyEwxl8MMY7KEQSKy1ocgG2eLRHhYHQ9uDiZnU9cAo5Nkn4hx52nxYyXTHqyxm1axmEzGXDsOBIz6woHPS1QZjIupzEXu5hxjK2Mj5F9fhKuTYHoDrJeaWYB9tTMgOc7zM8xIdXduX92zOqqMtx6nmXnbXPiLo5sXJ4pLp1VDJ0m0iAl3Xfh48S9c47Uw0vFCKvCUJdKH4P96bWL0KN0LRhD9Baxp1avWUSJUtvc0vwF6HhZrd3zzfnNN73y6Lfw7Bq5GZq5CKmRRYAhjfwzi3PTGkXTwSvMdbYk7f1VrGYIEOsTZCrqk94CMgMi8uS5onMBPQ2Z6OzHkTqZKiMrpLOwQ4NVyzoAFlO9PbdhGMoHx6fKBlOBE2tcQXZRYE";
+
+  for(let i = 0; i<100; i++) {
+    console.log(i);
+    createFile(nome, data);
+    await pausa(100);
+    updateFile(nome, data);
+    await pausa(100);
+    deleteFile(nome);
+    await pausa(100);
+  }
+  res.send("Experimento Concluído");
+});
+
+
 
 app.listen(8080,function(){
   console.log("Servidor ativo na porta 8080");
