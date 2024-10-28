@@ -1,19 +1,14 @@
-const dgram = require('dgram');
 const net = require('net');
 const fs = require('fs');
 
 class ClientRequestHandler {
-  constructor(serverHost = 'localhost', serverPort = 3000) {
+  constructor(serverHost = 'localhost', serverPort = 3000) { // Use a porta correta
     this.serverHost = serverHost;
     this.serverPort = serverPort;
-    this.client = dgram.createSocket('udp4');
   }
-  
 
   send(request) {
-    const client = new net.Socket();
-    const startTime = Date.now();  // Marca o início da operação
-
+    const startTime = Date.now(); 
     async function adicionarTextoNoArquivo(nomeArquivo, conteudoNovo) {
       try {
         // Adiciona uma nova linha seguida pelo novo conteúdo
@@ -27,28 +22,32 @@ class ClientRequestHandler {
     }
 
     return new Promise((resolve, reject) => {
-      
-      const message = Buffer.from(request);
+      const client = new net.Socket();
 
-      // Envia a mensagem para o servidor UDP
-      this.client.send(message, this.serverPort, this.serverHost, (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          console.log('Mensagem enviada ao servidor:', message.toString());
-        }
+      client.connect(this.serverPort, this.serverHost, () => {
+        console.log('Conectado ao servidor');
+        client.write(request);
       });
 
-      // Escuta a resposta do servidor
-      this.client.on('message', (response) => {
+      client.on('data', (data) => {
         const endTime = Date.now();  // Marca o fim ao receber a resposta
         const duration = endTime - startTime;  // Calcula o tempo total em ms
-        const responseMessage = response.toString();
         adicionarTextoNoArquivo('experiment.txt', duration);
-        resolve(JSON.parse(responseMessage));  // Deserializa a resposta
-        //this.client.close();  // Fecha o socket depois de receber a resposta
+        console.log('Resposta do servidor:', data.toString());
+        resolve(data.toString());
+        //client.destroy(); // Fecha a conexão
+      });
+
+      client.on('error', (err) => {
+        console.error('Erro na conexão:', err.message);
+        reject(err);
+      });
+
+      client.on('close', () => {
+        console.log('Conexão fechada');
       });
     });
   }
 }
+
 module.exports = ClientRequestHandler;
